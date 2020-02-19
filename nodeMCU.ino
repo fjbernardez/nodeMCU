@@ -13,53 +13,48 @@ const int len = 8;
 
 void setup() {
   //baudrate
-  Serial.begin(9600);  
+  Serial.begin(9600);
   //inicio servidor
   server.begin();
-  //modo servidor, nombre y clave visible  
+  //modo servidor, nombre y clave visible
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid, password);
 
   Serial.println("Servidor iniciado :)");
-  
+
 }
 
 void loop() {
 
-  //Serial.println("Esperando cliente...");
-  //delay(2000);
-  
   WiFiClient client;
   client = server.available();
-  
+
   if (client) {
 
-    //Serial.println("Cliente conectado");
-    
     while ( client.connected() ) {
 
       char c = client.read();
 
       if( charInList (c,len) ) {
-        
+
         Serial.write(c);
       }
     }
-  } 
+  }
 }
 
 
 int charInList (char c , int len) {
   int i ;
   int flag = 0;
-  
+
   for(i=0;i<len;i++){
-    
+
     if(command[i] == c){
-      flag = 1; 
-      break;            
+      flag = 1;
+      break;
     }
-      
+
   }
   return flag;
 }
